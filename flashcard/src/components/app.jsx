@@ -10,11 +10,11 @@ class App extends Component {
         this.state = {
             flashcardCollection: [],
             loading: true,
-            display: true,
+            flashcardButton: true,
             collectionNumber: 1,
             flashcardNumber: 0
         }
-        this.test = this.test.bind(this);
+        this.displayFlashcards = this.displayFlashcards.bind(this);
     }
 
     componentDidMount(){
@@ -27,18 +27,6 @@ class App extends Component {
         .catch(err => {
             console.log(err)
         })
-    }
-
-    test(){
-        console.log("Button clicked", this);
-        console.log('I am here');
-        console.log(this.state.display);
-        this.setState({
-            display: false
-        });
-        console.log("I am now here" + this.state.display);
-        this.state.display ? <div>Re-Loading...</div>:
-        <h1>Rendering new page</h1>
     }
 
     goToNextFlashcard(){
@@ -63,31 +51,59 @@ class App extends Component {
         });
     }
 
+    displayFlashcards(){
+        this.setState({
+            flashcardButton: false
+        });
+    }
+
     render() {
-        return (
-            this.state.loading ? <div>loading...</div>:
-            <div className = "container-fluid">
-                {console.log(this.state.flashcardCollection)}
-                {console.log(this.state.flashcardCollection[0].title)}
-                {console.log(this.state.flashcardCollection[0].cards)}
-                {console.log(this.state.flashcardCollection[0].cards[0].category)}
-                <TitleBar />
-                <div> 
-                {this.state.flashcardCollection.map((cardCollection, index) => 
-                    <FlashcardCollection key = {index} collection={cardCollection} />)}
-                </div>
-                <div>
+        {console.log("render", this.state.flashcardButton)}
+        if(this.state.flashcardButton === false){
+            return (
+            <div>
+            <div>
 {/*                 {this.state.flashcardCollection[this.state.collectionNumber].cards.map((flashcards, index) =>
                     <Flashcards key = {index} flashcard = {flashcards} /> )} */}
                     <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
                     nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}/>
                 </div>
-                <div> 
-                    <button onClick={() => this.test()}>Test</button>
-                </div>
+{/*                 <div>
+                    <button onClick={() => this.displayFlashcards()}>Flashcards!</button>
+                </div> */}
             </div>
-        );
+            )}
+        if (this.state.loading === true){
+            return (
+                this.state.loading ? <div>loading...</div>:
+                <div className = "container-fluid">
+                    {console.log(this.state.flashcardCollection)}
+                    {console.log(this.state.flashcardCollection[0].title)}
+                    {console.log(this.state.flashcardCollection[0].cards)}
+                    {console.log(this.state.flashcardCollection[0].cards[0].category)}
+                    <TitleBar />
+                    <div> 
+                        {this.state.flashcardCollection.map((cardCollection, index) => 
+                        <FlashcardCollection key = {index} collection={cardCollection} />)}
+                    </div>
+                </div>
+            )}
+        else if (this.state.loading === false){
+            return (
+                <div className = "container-fluid">
+                {console.log(this.state.flashcardCollection)}
+                {console.log(this.state.flashcardCollection[0].title)}
+                {console.log(this.state.flashcardCollection[0].cards)}
+                {console.log(this.state.flashcardCollection[0].cards[0].category)}
+                <TitleBar />
+                    <div> 
+                        {this.state.flashcardCollection.map((cardCollection, index) => 
+                        <FlashcardCollection key = {index} collection={cardCollection} />)}
+                    </div>
+                    <button onClick={() => this.displayFlashcards()}>Flashcards!</button>
+                </div>
+            )
+        }
     }
 }
-
 export default App;
