@@ -46,7 +46,10 @@ class App extends Component {
                 {console.log(this.state.flashcardCollection[0].cards)}
                 {console.log(this.state.flashcardCollection[0].cards[0].category)}
                 <TitleBar />
-                <FlashcardCollection collection={this.state.flashcardCollection[this.state.collectionNumber]} />
+                <div> 
+                {this.state.flashcardCollection.map((cardCollection, index) => 
+                    <FlashcardCollection key = {index} collection={cardCollection} />)}
+                </div>
                 <div> 
                     <button onClick={() => this.test()}>New Page</button>
                 </div>
