@@ -57,6 +57,12 @@ class App extends Component {
         });
     }
 
+    displayMainMenu(){
+        this.setState({
+            flashcardButton: true
+        });
+    }
+
     render() {
         {console.log("render", this.state.flashcardButton)}
         if(this.state.flashcardButton === false){
@@ -68,9 +74,9 @@ class App extends Component {
                     <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
                     nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}/>
                 </div>
-{/*                 <div>
-                    <button onClick={() => this.displayFlashcards()}>Flashcards!</button>
-                </div> */}
+                <div>
+                    <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
+                </div>
             </div>
             )}
         if (this.state.loading === true){
