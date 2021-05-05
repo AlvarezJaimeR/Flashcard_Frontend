@@ -11,7 +11,8 @@ class App extends Component {
             flashcardCollection: [],
             loading: true,
             display: true,
-            collectionNumber: 0
+            collectionNumber: 1,
+            flashcardNumber: 0
         }
         this.test = this.test.bind(this);
     }
@@ -40,6 +41,28 @@ class App extends Component {
         <h1>Rendering new page</h1>
     }
 
+    goToNextFlashcard(){
+        let tempCard = this.state.flashcardNumber;
+        tempCard++;
+        if (tempCard === this.state.flashcardCollection[this.state.collectionNumber].cards.length){
+            tempCard = 0;
+        }
+        this.setState({
+            flashcardNumber: tempCard
+        });
+    }
+
+    goToPreviousFlashcard(){
+        let tempCard = this.state.flashcardNumber;
+        tempCard--;
+        if(tempCard < 0){
+            tempCard = this.state.flashcardCollection[this.state.collectionNumber].cards.length-1;
+        }
+        this.setState({
+            flashcardNumber: tempCard
+        });
+    }
+
     render() {
         return (
             this.state.loading ? <div>loading...</div>:
@@ -54,8 +77,10 @@ class App extends Component {
                     <FlashcardCollection key = {index} collection={cardCollection} />)}
                 </div>
                 <div>
-                {this.state.flashcardCollection[this.state.collectionNumber].cards.map((flashcards, index) =>
-                    <Flashcards key = {index} flashcard = {flashcards} /> )}
+{/*                 {this.state.flashcardCollection[this.state.collectionNumber].cards.map((flashcards, index) =>
+                    <Flashcards key = {index} flashcard = {flashcards} /> )} */}
+                    <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
+                    nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}/>
                 </div>
                 <div> 
                     <button onClick={() => this.test()}>Test</button>
