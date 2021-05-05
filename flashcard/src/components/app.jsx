@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import TitleBar from './TitleBar/titleBar';
 import FlashcardCollection from './FlashcardCollection/flashcardCollection';
+import Flashcards from './Flashcards/flashcards';
 
 class App extends Component {
     constructor(props){
@@ -12,6 +13,7 @@ class App extends Component {
             display: true,
             collectionNumber: 0
         }
+        this.test = this.test.bind(this);
     }
 
     componentDidMount(){
@@ -27,6 +29,7 @@ class App extends Component {
     }
 
     test(){
+        console.log("Button clicked", this);
         console.log('I am here');
         console.log(this.state.display);
         this.setState({
@@ -34,7 +37,7 @@ class App extends Component {
         });
         console.log("I am now here" + this.state.display);
         this.state.display ? <div>Re-Loading...</div>:
-        <FlashcardCollection />
+        <h1>Rendering new page</h1>
     }
 
     render() {
@@ -50,8 +53,12 @@ class App extends Component {
                 {this.state.flashcardCollection.map((cardCollection, index) => 
                     <FlashcardCollection key = {index} collection={cardCollection} />)}
                 </div>
+                <div>
+                {this.state.flashcardCollection[this.state.collectionNumber].cards.map((flashcards, index) =>
+                    <Flashcards key = {index} flashcard = {flashcards} /> )}
+                </div>
                 <div> 
-                    <button onClick={() => this.test()}>New Page</button>
+                    <button onClick={() => this.test()}>Test</button>
                 </div>
             </div>
         );
