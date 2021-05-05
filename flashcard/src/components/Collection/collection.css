@@ -1,0 +1,17 @@
+.collection {
+	background-color: white;
+	text-align: center;
+}
+
+.collection-cover {
+	background-color: grey;
+	text-align: center;
+	border-right: solid black;
+	border-bottom: solid black;
+	border-left: solid black;
+	border-top: solid black;
+}
+
+.title {
+	padding: 5%;
+}

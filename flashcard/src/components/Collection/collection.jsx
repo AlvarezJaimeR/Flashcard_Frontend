@@ -1,9 +1,11 @@
 import React from "react";
+import './collection.css';
 
 function Collection(props){
     return (
         <div className="collection">
-            <div className="front">
+            {console.log("in the collection function.")}
+            <div className="collection-cover">
                 <h1 className = "title">{props.collection.title}</h1>
             </div>
         </div>
