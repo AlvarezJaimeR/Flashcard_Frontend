@@ -3,6 +3,7 @@ import axios from 'axios';
 import TitleBar from './TitleBar/titleBar';
 import FlashcardCollection from './FlashcardCollection/flashcardCollection';
 import Flashcards from './Flashcards/flashcards';
+import CollectionCreator from './CollectionCreator/collectionCreator';
 
 class App extends Component {
     constructor(props){
@@ -11,10 +12,12 @@ class App extends Component {
             flashcardCollection: [],
             loading: true,
             flashcardButton: true,
+            collectionButton: true,
             collectionNumber: 0,
             flashcardNumber: 0
         }
         this.showFlashcards = this.showFlashcards.bind(this);
+        this.addCollection = this.addCollection.bind(this);
     }
 
     componentDidMount(){
@@ -73,9 +76,17 @@ class App extends Component {
         });
     }
 
+    addNewCollection(collection){
+        this.state.flashcardCollection.push(collection);
+        this.setState({
+            collectionNumber: this.state.flashcardCollection.length - 1
+        });
+    }
+
     displayMainMenu(){
         this.setState({
-            flashcardButton: true
+            flashcardButton: true,
+            collectionButton: true
         });
     }
 
@@ -85,7 +96,25 @@ class App extends Component {
         });
     }
 
+    addCollection(){
+        {console.log("Add collection button clicked.")}
+        this.setState({
+            collectionButton: false
+        });
+    }
+
     render() {
+        if(this.state.collectionButton === false){
+            return (
+                <div>
+                    <div>
+                        <CollectionCreator addNewCollection={this.addNewCollection.bind(this)}/>
+                    </div>
+                    <div>
+                        <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
+                    </div>
+                </div>
+            )}
         if(this.state.flashcardButton === false){
             return (
             <div>
@@ -117,6 +146,9 @@ class App extends Component {
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
                     <div>
                         <button onClick={() => this.showFlashcards()}>Show Collection Flashcards</button>
+                    </div>
+                    <div>
+                        <button onClick={() => this.addCollection()}>Add A New Collection</button>
                     </div>
                 </div>
             )
