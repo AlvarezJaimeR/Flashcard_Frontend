@@ -32,6 +32,16 @@ class App extends Component {
         })
     }
 
+    addNewCollection(collection){
+        axios.post("http://localhost:5000/api/collections", collection)
+        .then( res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     goToNextFlashcard(){
         let tempCard = this.state.flashcardNumber;
         tempCard++;
@@ -76,18 +86,21 @@ class App extends Component {
         });
     }
 
-    addNewCollection(collection){
-        this.state.flashcardCollection.push(collection);
-        this.setState({
-            collectionNumber: this.state.flashcardCollection.length - 1
-        });
-    }
-
     displayMainMenu(){
         this.setState({
             flashcardButton: true,
             collectionButton: true
         });
+
+        axios.get("http://localhost:5000/api/collections")
+        .then(res => {
+            console.log(res);
+            const collections = res.data;
+            this.setState({flashcardCollection:collections, loading: false})
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     showFlashcards(){
@@ -116,17 +129,27 @@ class App extends Component {
                 </div>
             )}
         if(this.state.flashcardButton === false){
-            return (
-            <div>
+            {if (this.state.flashcardCollection[this.state.collectionNumber].cards.length == 0){
+                return (
                 <div>
-                    <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
-                    nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}/>
-                </div>
-                <div>
+                    <h1> No Flashcards available! </h1>
                     <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
                 </div>
-            </div>
-            )}
+                )}
+            else {
+            return (
+                <div>
+                    <div>
+                        <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
+                        nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}/>
+                    </div>
+                    <div>
+                        <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
+                    </div>
+                </div>
+                )}
+            }
+        }
         if (this.state.loading === true){
             return (
                 <div>
