@@ -113,8 +113,11 @@ class App extends Component {
                 {console.log(this.state.flashcardCollection[0].cards)}
                 {console.log(this.state.flashcardCollection[0].cards[0].category)}
                 <TitleBar />
-                    <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
+                <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
+                    <div>
+                        <button onClick={() => this.showFlashcards()}>Show Collection Flashcards</button>
+                    </div>
                 </div>
             )
         }
