@@ -9,6 +9,7 @@ function Flashcard(props){
                 <h1 className = "category">{props.flashcard.category}</h1>
                 <h3 className = "question">{props.flashcard.question}</h3>
                 <h5 className = "answer">{props.flashcard.answer}</h5>
+                <h6 className = "count">{props.currentFlashcard + " / " + props.flashcardTotal}</h6>
             </div>
         </div>
     )

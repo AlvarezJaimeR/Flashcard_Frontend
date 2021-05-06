@@ -129,7 +129,7 @@ class App extends Component {
                 </div>
             )}
         if(this.state.flashcardButton === false){
-            {if (this.state.flashcardCollection[this.state.collectionNumber].cards.length == 0){
+            {if (this.state.flashcardCollection[this.state.collectionNumber].cards.length === 0){
                 return (
                 <div>
                     <h1> No Flashcards available! </h1>
@@ -141,7 +141,9 @@ class App extends Component {
                 <div>
                     <div>
                         <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
-                        nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}/>
+                        nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}
+                        flashcardTotal = {this.state.flashcardCollection[this.state.collectionNumber].cards.length}
+                        currentFlashcard = {this.state.flashcardNumber + 1}/>
                     </div>
                     <div>
                         <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
