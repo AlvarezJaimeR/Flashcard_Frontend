@@ -4,6 +4,7 @@ import TitleBar from './TitleBar/titleBar';
 import FlashcardCollection from './FlashcardCollection/flashcardCollection';
 import Flashcards from './Flashcards/flashcards';
 import CollectionCreator from './CollectionCreator/collectionCreator';
+import FlashcardCreator from './FlashcardCreator/flashcardCreator';
 
 class App extends Component {
     constructor(props){
@@ -13,6 +14,7 @@ class App extends Component {
             loading: true,
             flashcardButton: true,
             collectionButton: true,
+            addFlashcardButton: true,
             collectionNumber: 0,
             flashcardNumber: 0
         }
@@ -36,6 +38,18 @@ class App extends Component {
         axios.post("http://localhost:5000/api/collections", collection)
         .then( res => {
             console.log(res);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    addNewFlashcard(flashcard){
+        console.log("add new flashcard ", flashcard);
+        axios.post("http://localhost:5000/api/collections/"+this.state.flashcardCollection[this.state.collectionNumber]._id+"/cards/", flashcard)
+        .then(res => {
+            console.log(res);
+            axios.post("http://localhost:5000/api/collections/"+this.state.flashcardCollection[this.state.collectionNumber]._id+"/cards/"+res.data._id, flashcard)
         })
         .catch(err => {
             console.log(err)
@@ -89,7 +103,8 @@ class App extends Component {
     displayMainMenu(){
         this.setState({
             flashcardButton: true,
-            collectionButton: true
+            collectionButton: true,
+            addFlashcardButton: true
         });
 
         axios.get("http://localhost:5000/api/collections")
@@ -105,18 +120,49 @@ class App extends Component {
 
     showFlashcards(){
         this.setState({
-            flashcardButton: false
+            flashcardButton: false,
+            addFlashcardButton: true,
+            collectionButton: true
         });
+
+        axios.get("http://localhost:5000/api/collections")
+        .then(res => {
+            console.log(res);
+            const collections = res.data;
+            this.setState({flashcardCollection:collections, loading: false})
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     addCollection(){
-        {console.log("Add collection button clicked.")}
         this.setState({
             collectionButton: false
         });
     }
 
+    addFlashcard(){
+        console.log("create flashcard button pressed");
+        this.setState({
+            addFlashcardButton: false
+        });
+    }
+
     render() {
+        if(this.state.addFlashcardButton === false){
+            return (
+                <div>
+                    <div>
+                        <FlashcardCreator addNewFlashcard={this.addNewFlashcard.bind(this)}/>
+                    </div>
+                    <div>
+                        <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
+                        <button onClick={() => this.showFlashcards()}>Show Collection Flashcards</button>
+                    </div>
+                </div>
+            )
+        }
         if(this.state.collectionButton === false){
             return (
                 <div>
@@ -134,6 +180,7 @@ class App extends Component {
                 <div>
                     <h1> No Flashcards available! </h1>
                     <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
+                    <button onClick={() => this.addFlashcard()}>Create new flashcards!</button>
                 </div>
                 )}
             else {
@@ -147,6 +194,7 @@ class App extends Component {
                     </div>
                     <div>
                         <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
+                        <button onClick={() => this.addFlashcard()}>Create new flashcards!</button>
                     </div>
                 </div>
                 )}
