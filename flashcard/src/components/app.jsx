@@ -16,6 +16,7 @@ class App extends Component {
             flashcardButton: true,
             collectionButton: true,
             addFlashcardButton: true,
+            deleteButton: true,
             collectionNumber: 0,
             flashcardNumber: 0
         }
@@ -50,6 +51,21 @@ class App extends Component {
         axios.post("http://localhost:5000/api/collections/"+this.state.flashcardCollection[this.state.collectionNumber]._id+"/cards/", flashcard)
         .then(res => {
             console.log(res);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
+    deleteCollection(){
+        console.log("delete collection button pressed");
+        axios.delete('http://localhost:5000/api/collections/'+this.state.flashcardCollection[this.state.collectionNumber]._id)
+        axios.get("http://localhost:5000/api/collections")
+        .then(res => {
+            console.log(res);
+            const collections = res.data;
+            console.log('before setting the state. delete: ', this.state.flashcardCollection);
+            this.setState({flashcardCollection:collections, loading: false, deleteButton: false, collectionNumber: 0})
         })
         .catch(err => {
             console.log(err)
@@ -150,6 +166,7 @@ class App extends Component {
     }
 
     render() {
+        //Flashcard Creator
         if(this.state.addFlashcardButton === false){
             return (
                 <div>
@@ -163,6 +180,7 @@ class App extends Component {
                 </div>
             )
         }
+        //Collection Creator
         if(this.state.collectionButton === false){
             return (
                 <div>
@@ -174,8 +192,9 @@ class App extends Component {
                     </div>
                 </div>
             )}
+        //Show Flashcards
         if(this.state.flashcardButton === false){
-            {if (this.state.flashcardCollection[this.state.collectionNumber].cards.length === 0){
+            if (this.state.flashcardCollection[this.state.collectionNumber].cards.length === 0){
                 return (
                 <div>
                     <FlashcardTitle collectionName = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
@@ -201,21 +220,42 @@ class App extends Component {
                 </div>
                 )}
             }
-        }
+        //Initial Loading Screen
         if (this.state.loading === true){
             return (
                 <div>
                     <h1>loading...</h1>
                 </div>
             )}
+        //Collection Card menu
         if (this.state.loading === false){
-            return (
+            if(this.state.deleteButton === true){
+                return (
+                    <div className = "container-fluid">
+                    {console.log("fresh state", this.state)}
+                    {console.log(this.state.flashcardCollection)}
+                    {console.log(this.state.flashcardCollection[0].title)}
+                    {console.log(this.state.flashcardCollection[0].cards)}
+                    {console.log(this.state.flashcardCollection[0].cards[0].category)}
+                    <TitleBar />
+                    <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
+                        nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
+                        <div>
+                            <button onClick={() => this.showFlashcards()}>Show Collection Flashcards</button>
+                        </div>
+                        <div>
+                            <button onClick={() => this.addCollection()}>Add A New Collection</button>
+                        </div>
+                        <div>
+                            <button onClick={() => this.deleteCollection()}>Delete this Collection</button>
+                        </div>
+                    </div>
+                )
+            }else {
+                return(
                 <div className = "container-fluid">
-                {console.log("fresh state", this.state)}
-                {console.log(this.state.flashcardCollection)}
-                {console.log(this.state.flashcardCollection[0].title)}
-                {console.log(this.state.flashcardCollection[0].cards)}
-                {console.log(this.state.flashcardCollection[0].cards[0].category)}
+                {console.log('after setting the state. delete: ', this.state.flashcardCollection)}
+                {console.log('shows current collection #',this.state.flashcardCollection[this.state.collectionNumber])}
                 <TitleBar />
                 <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
@@ -225,8 +265,12 @@ class App extends Component {
                     <div>
                         <button onClick={() => this.addCollection()}>Add A New Collection</button>
                     </div>
+                    <div>
+                        <button onClick={() => this.deleteCollection()}>Delete this Collection</button>
+                    </div>
                 </div>
-            )
+                ) 
+            }
         }
     }
 }
