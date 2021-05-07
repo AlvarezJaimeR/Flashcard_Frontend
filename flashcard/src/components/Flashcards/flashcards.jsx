@@ -6,13 +6,13 @@ function Flashcards(props){
         <div className = "row row-spacer">
         {console.log("in the flashcard function")}
         {console.log("flashcard props:", props)}
-        <div className="col-md-3">
+        <div className="col-md-3 text-center">
             <button onClick={() => props.previousCard()}>Previous Card</button>
         </div>
         <div className="col-md-6">
             <Flashcard flashcard = {props.flashcard} currentFlashcard = {props.currentFlashcard} flashcardTotal = {props.flashcardTotal}/>
         </div>
-        <div className ="col-md-3">
+        <div className ="col-md-3 text-center">
             <button onClick={() => props.nextCard()}>Next Card</button>
         </div>
     </div>

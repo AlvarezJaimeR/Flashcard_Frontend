@@ -5,6 +5,7 @@ import FlashcardCollection from './FlashcardCollection/flashcardCollection';
 import Flashcards from './Flashcards/flashcards';
 import CollectionCreator from './CollectionCreator/collectionCreator';
 import FlashcardCreator from './FlashcardCreator/flashcardCreator';
+import FlashcardTitle from './FlashcardTitle/flashcardTitle';
 
 class App extends Component {
     constructor(props){
@@ -49,7 +50,6 @@ class App extends Component {
         axios.post("http://localhost:5000/api/collections/"+this.state.flashcardCollection[this.state.collectionNumber]._id+"/cards/", flashcard)
         .then(res => {
             console.log(res);
-            axios.post("http://localhost:5000/api/collections/"+this.state.flashcardCollection[this.state.collectionNumber]._id+"/cards/"+res.data._id, flashcard)
         })
         .catch(err => {
             console.log(err)
@@ -178,6 +178,7 @@ class App extends Component {
             {if (this.state.flashcardCollection[this.state.collectionNumber].cards.length === 0){
                 return (
                 <div>
+                    <FlashcardTitle collectionName = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
                     <h1> No Flashcards available! </h1>
                     <button onClick={() => this.displayMainMenu()}>Main Menu!</button>
                     <button onClick={() => this.addFlashcard()}>Create new flashcards!</button>
@@ -187,6 +188,7 @@ class App extends Component {
             return (
                 <div>
                     <div>
+                        <FlashcardTitle collectionName = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
                         <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
                         nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}
                         flashcardTotal = {this.state.flashcardCollection[this.state.collectionNumber].cards.length}
@@ -229,9 +231,3 @@ class App extends Component {
     }
 }
 export default App;
-
-/* Map through a collection and display all of the content
-<div> 
-{this.state.flashcardCollection.map((cardCollection, index) => 
-<FlashcardCollection key = {index} collection={cardCollection} />)}
-</div> */

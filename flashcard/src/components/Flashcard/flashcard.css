@@ -1,0 +1,13 @@
+.flashcard {
+	background-color: white;
+	text-align: center;
+}
+
+.flashcard-cover {
+	background-color: grey;
+	text-align: center;
+	border-right: solid black;
+	border-bottom: solid black;
+	border-left: solid black;
+	border-top: solid black;
+}
