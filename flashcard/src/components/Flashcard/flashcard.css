@@ -11,3 +11,8 @@
 	border-left: solid black;
 	border-top: solid black;
 }
+
+.count {
+	float: right;
+	margin: 5px;
+}
