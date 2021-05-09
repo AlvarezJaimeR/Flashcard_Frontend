@@ -5,7 +5,7 @@ function FlashcardTitle(props) {
     return (
         <div className="flashcard-title-bar">
             {console.log(props)}
-            <div className="col-md-12" style = {{padding: 0}}>
+            <div className="col-md-12">
                 <div>
                     <h1>{props.desiredTitle}</h1>
                 </div>

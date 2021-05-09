@@ -4,9 +4,9 @@ import './titleBar.css';
 function TitleBar(props) {
     return (
         <div className="title-bar">
-            <div className="col-md-12" style = {{padding: 0}}>
+            <div className="col-md-12">
                 <div>
-                    <h1>Collection of Flashcards</h1>
+                    <h1>{props.desiredTitle}</h1>
                 </div>
             </div>
         </div>

@@ -175,8 +175,8 @@ class App extends Component {
                         <FlashcardCreator addNewFlashcard={this.addNewFlashcard.bind(this)}/>
                     </div>
                     <div>
-                        <button onClick={() => this.displayMainMenu()}className='btn btn-success'>Collection Menu!</button>
-                        <button onClick={() => this.showFlashcards()}className='btn btn-primary'>Flashcard Menu!</button>
+                        <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>
+                        <button onClick={() => this.showFlashcards()}className='btn btn-primary show-flashcard'>Flashcard Menu!</button>
                     </div>
                 </div>
             )
@@ -185,11 +185,12 @@ class App extends Component {
         if(this.state.collectionButton === false){
             return (
                 <div>
+                    <FlashcardTitle desiredTitle = 'Collection Creator'/>
                     <div>
                         <CollectionCreator addNewCollection={this.addNewCollection.bind(this)}/>
                     </div>
                     <div>
-                        <button onClick={() => this.displayMainMenu()}className='btn btn-success'>Collection Menu!</button>
+                        <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>
                     </div>
                 </div>
             )}
@@ -198,25 +199,25 @@ class App extends Component {
             if (this.state.flashcardCollection[this.state.collectionNumber].cards.length === 0){
                 return (
                 <div>
-                    <FlashcardTitle desiredTitle = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
+                    <TitleBar desiredTitle = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
                     <h1> No Flashcards available! </h1>
-                    <button onClick={() => this.displayMainMenu()}className='btn btn-success'>Collection Menu!</button>
-                    <button onClick={() => this.addFlashcard()}className='btn btn-primary'>Create new flashcards!</button>
+                    <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>
+                    <button onClick={() => this.addFlashcard()}className='btn btn-primary show-flashcard'>Create new flashcards!</button>
                 </div>
                 )}
             else {
             return (
                 <div>
                     <div>
-                        <FlashcardTitle collectionName = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
+                        <TitleBar desiredTitle = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
                         <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
                         nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}
                         flashcardTotal = {this.state.flashcardCollection[this.state.collectionNumber].cards.length}
                         currentFlashcard = {this.state.flashcardNumber + 1}/>
                     </div>
                     <div>
-                        <button onClick={() => this.displayMainMenu()}className='btn btn-success'>Collection Menu!</button>
-                        <button onClick={() => this.addFlashcard()}className='btn btn-primary'>Create new flashcards!</button>
+                        <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>
+                        <button onClick={() => this.addFlashcard()}className='btn btn-primary show-flashcard'>Create new flashcards!</button>
                     </div>
                 </div>
                 )}
@@ -238,7 +239,7 @@ class App extends Component {
                     {console.log(this.state.flashcardCollection[0].title)}
                     {console.log(this.state.flashcardCollection[0].cards)}
                     {console.log(this.state.flashcardCollection[0].cards[0].category)}
-                    <TitleBar />
+                    <TitleBar desiredTitle='Collection of Flashcards'/>
                     <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                         nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
                         <div className = "row">
@@ -259,7 +260,7 @@ class App extends Component {
                 <div className = "container-fluid">
                 {console.log('after setting the state. delete: ', this.state.flashcardCollection)}
                 {console.log('shows current collection #',this.state.flashcardCollection[this.state.collectionNumber])}
-                <TitleBar />
+                <TitleBar desiredTitle='Collection of Flashcards'/>
                 <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
                     <div className='show-flashcard col-md-4'>
