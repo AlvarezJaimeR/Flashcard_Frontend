@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FlashcardTitle from '../FlashcardTitle/flashcardTitle';
+import './flashcardCreator.css';
 
 class FlashcardCreator extends Component {
     constructor(props){
@@ -44,22 +45,22 @@ class FlashcardCreator extends Component {
                 <FlashcardTitle desiredTitle='Flashcard Creator'/>
                 <form onSubmit ={this.handleSubmit}>
                     <div className = "row col-align">
-                        <div className = "col-md-3">
+                        <div className = "form-change">
                             <label>Category:</label>
                             <input type="text" name="category" value={this.state.category}
                             onChange={this.handleChange} />
                         </div>
-                        <div className = "col-md-3">
+                        <div className = "form-change">
                             <label>Question:</label>
                             <input type="text" name="question" value={this.state.question}
                             onChange={this.handleChange} />
                         </div>
-                        <div className = "col-md-3">
+                        <div className = "form-change">
                             <label>Answer:</label>
                             <input type="text" name="answer" value={this.state.answer}
                             onChange={this.handleChange} />
                         </div>
-                        <div className="col-md-3">
+                        <div className="form-change">
                             <input type="submit" value="Add"/>
                         </div>
                     </div>

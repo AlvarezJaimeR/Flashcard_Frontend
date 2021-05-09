@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './collectionCreator.css';
 
 class CollectionCreator extends Component {
     constructor(props){
@@ -35,12 +36,12 @@ class CollectionCreator extends Component {
             <div>
                 <form onSubmit ={this.handleSubmit}>
                     <div className = "row col-align">
-                        <div className = "col-md-4">
+                        <div className = "form-change">
                             <label>Title:</label>
                             <input type="text" name="title" value={this.state.title}
                             onChange={this.handleChange} />
                         </div>
-                        <div className="col-md-4">
+                        <div className="form-change">
                             <input type="submit" value="Add"/>
                         </div>
                     </div>
