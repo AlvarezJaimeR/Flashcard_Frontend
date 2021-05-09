@@ -7,7 +7,7 @@ function FlashcardTitle(props) {
             {console.log(props)}
             <div className="col-md-12" style = {{padding: 0}}>
                 <div>
-                    <h1>{props.collectionName}</h1>
+                    <h1>{props.desiredTitle}</h1>
                 </div>
             </div>
         </div>

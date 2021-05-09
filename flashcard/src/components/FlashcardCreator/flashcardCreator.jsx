@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import FlashcardTitle from '../FlashcardTitle/flashcardTitle';
 
 class FlashcardCreator extends Component {
     constructor(props){
@@ -40,6 +41,7 @@ class FlashcardCreator extends Component {
     render() { 
         return (  
             <div>
+                <FlashcardTitle desiredTitle='Flashcard Creator'/>
                 <form onSubmit ={this.handleSubmit}>
                     <div className = "row col-align">
                         <div className = "col-md-3">
