@@ -18,11 +18,16 @@ class App extends Component {
             collectionButton: true,
             addFlashcardButton: true,
             deleteButton: true,
+            deleteFlashcardButton: true,
             collectionNumber: 0,
             flashcardNumber: 0
         }
         this.showFlashcards = this.showFlashcards.bind(this);
         this.addCollection = this.addCollection.bind(this);
+        this.addFlashcard=this.addFlashcard.bind(this);
+        this.deleteFlashcard=this.deleteFlashcard.bind(this);
+        this.deleteCollection=this.deleteCollection.bind(this);
+        this.flashcardRender=this.flashcardRender.bind(this);
     }
 
     componentDidMount(){
@@ -72,6 +77,22 @@ class App extends Component {
             console.log(err)
         })
     }
+
+    deleteFlashcard(){
+        console.log("delete flashcard button pressed");
+        console.log('collection number:', this.state.collectionNumber);
+        console.log('flashcard number', this.state.flashcardNumber);
+        axios.delete('http://localhost:5000/api/collections/'+this.state.flashcardCollection[this.state.collectionNumber]._id+'/cards/'+
+            this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]._id)
+        .then(res => {
+            this.flashcardRender();
+            console.log('before setting the state. delete: ', this.state.flashcardCollection[this.state.collectionNumber].cards);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
 
     goToNextFlashcard(){
         let tempCard = this.state.flashcardNumber;
@@ -135,6 +156,18 @@ class App extends Component {
         })
     }
 
+    flashcardRender(){
+        axios.get("http://localhost:5000/api/collections")
+        .then(res => {
+            console.log('flashcard render', res);
+            const collections = res.data;
+            this.setState({flashcardCollection: collections, loading: false, flashcardButton: false, flashcardNumber: 0})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     showFlashcards(){
         this.setState({
             flashcardButton: false,
@@ -144,7 +177,7 @@ class App extends Component {
 
         axios.get("http://localhost:5000/api/collections")
         .then(res => {
-            console.log(res);
+            console.log('show flashcards',res);
             const collections = res.data;
             this.setState({flashcardCollection:collections, loading: false})
         })
@@ -218,6 +251,7 @@ class App extends Component {
                     <div>
                         <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>
                         <button onClick={() => this.addFlashcard()}className='btn btn-primary show-flashcard'>Create new flashcards!</button>
+                        <button onClick={() => this.deleteFlashcard()}className='btn btn-danger show-flashcard'>Delete this flashcard!</button>
                     </div>
                 </div>
                 )}
@@ -263,13 +297,13 @@ class App extends Component {
                 <TitleBar desiredTitle='Collection of Flashcards'/>
                 <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
-                    <div className='show-flashcard col-md-4'>
+                    <div className='show-flashcard col-sml-4'>
                         <button onClick={() => this.showFlashcards()} className='btn btn-primary'>Flashcard Menu!</button>
                     </div>
-                    <div className='show-flashcard col-md-4'>
+                    <div className='show-flashcard col-sml-4'>
                         <button onClick={() => this.addCollection()} className='btn btn-success'>Add A New Collection</button>
                     </div>
-                    <div className='show-flashcard col-md-4'>
+                    <div className='show-flashcard col-sml-4'>
                         <button onClick={() => this.deleteCollection()} className='btn btn-danger'>Delete this Collection</button>
                     </div>
                 </div>
