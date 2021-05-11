@@ -114,7 +114,7 @@ class App extends Component {
             tempCard = 0;
         }
         this.setState({
-            flashcardNumber: tempCard
+            flashcardNumber: tempCard, answerShowing: false
         });
     }
 
@@ -125,7 +125,7 @@ class App extends Component {
             tempCard = this.state.flashcardCollection[this.state.collectionNumber].cards.length-1;
         }
         this.setState({
-            flashcardNumber: tempCard
+            flashcardNumber: tempCard, answerShowing: false
         });
     }
 
