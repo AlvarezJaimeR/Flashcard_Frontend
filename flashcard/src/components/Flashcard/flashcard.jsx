@@ -11,7 +11,7 @@ function Flashcard(props){
                 <h1 className = "category">{props.flashcard.category}</h1>
                 <h3 className = "question">{props.flashcard.question}</h3>
                 <div>
-                    <button onClick={() => props.showAnswer()}>{props.display}</button>
+                    <button onClick={() => props.showAnswer()} className='btn btn-light'>{props.display}</button>
                     { props.answerShowing ? 
                         <div>
                         <h5 className = "answer">{props.flashcard.answer}</h5>

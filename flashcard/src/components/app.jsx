@@ -6,6 +6,7 @@ import Flashcards from './Flashcards/flashcards';
 import CollectionCreator from './CollectionCreator/collectionCreator';
 import FlashcardCreator from './FlashcardCreator/flashcardCreator';
 import FlashcardTitle from './FlashcardTitle/flashcardTitle';
+import UpdateCollection from './UpdateCollection/updateCollection';
 import './app.css';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
             addFlashcardButton: true,
             deleteButton: true,
             answerShowing: false,
+            collectionUpdateButton: true,
             display: 'Show Answer',
             collectionNumber: 0,
             flashcardNumber: 0
@@ -94,6 +96,16 @@ class App extends Component {
         })
     }
 
+    updateNewCollection(collection){
+        axios.put('http://localhost:5000/api/collections/'+this.state.flashcardCollection[this.state.collectionNumber]._id, collection)
+        .then ( res =>{
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 
     goToNextFlashcard(){
         let tempCard = this.state.flashcardNumber;
@@ -143,7 +155,8 @@ class App extends Component {
         this.setState({
             flashcardButton: true,
             collectionButton: true,
-            addFlashcardButton: true
+            addFlashcardButton: true,
+            collectionUpdateButton: true
         });
 
         axios.get("http://localhost:5000/api/collections")
@@ -200,6 +213,13 @@ class App extends Component {
         });
     }
 
+    updateCollection(){
+        console.log('update collection button pressed');
+        this.setState({
+            collectionUpdateButton: false
+        });
+    }
+
     showAnswer(){
         console.log('Showing Answer');
         if (this.state.answerShowing === false) {
@@ -216,6 +236,23 @@ class App extends Component {
     }
 
     render() {
+        //Collection Update
+        if(this.state.collectionUpdateButton === false) {
+            return (
+                <div>
+                    <div>
+                        <FlashcardTitle desiredTitle = 'Update Collection'/>
+                    </div>
+                    <div>
+                        <UpdateCollection updateNewCollection={this.updateNewCollection.bind(this)} 
+                            currentTitle={this.state.flashcardCollection[this.state.collectionNumber].title}/> 
+                    </div>
+                    <div>
+                        <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>
+                    </div>
+                </div>
+            )
+        }
         //Flashcard Creator
         if(this.state.addFlashcardButton === false){
             return (
@@ -293,15 +330,18 @@ class App extends Component {
                     <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                         nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
                         <div className = "row">
-                            <div className='show-flashcard col-sml-4'>
-                                <button onClick={() => this.showFlashcards()} className='btn btn-primary'>Flashcard Menu!</button>
-                            </div>
-                            <div className='show-flashcard col-sml-4'>
-                                <button onClick={() => this.addCollection()} className='btn btn-success'>Add A New Collection</button>
-                            </div>
-                            <div className='show-flashcard col-sml-4'>
-                                <button onClick={() => this.deleteCollection()} className='btn btn-danger'>Delete this Collection</button>
-                            </div>
+                            <div className='show-flashcard col-sml-3'>
+                            <button onClick={() => this.showFlashcards()} className='btn btn-primary'>Flashcard Menu!</button>
+                        </div>
+                        <div className='show-flashcard col-sml-3'>
+                            <button onClick={() => this.addCollection()} className='btn btn-success'>Add A New Collection</button>
+                        </div>
+                        <div className='show-flashcard col-sml-3'>
+                            <button onClick={() => this.deleteCollection()} className='btn btn-danger'>Delete this Collection</button>
+                        </div>
+                        <div className='show-flashcard col-sml-3'>
+                            <button onClick={() => this.updateCollection()} className='btn btn-warning'>Update this Collection</button>
+                        </div>
                         </div>
                     </div>
                 )
@@ -313,14 +353,17 @@ class App extends Component {
                 <TitleBar desiredTitle='Collection of Flashcards'/>
                 <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
-                    <div className='show-flashcard col-sml-4'>
+                    <div className='show-flashcard col-sml-3'>
                         <button onClick={() => this.showFlashcards()} className='btn btn-primary'>Flashcard Menu!</button>
                     </div>
-                    <div className='show-flashcard col-sml-4'>
+                    <div className='show-flashcard col-sml-3'>
                         <button onClick={() => this.addCollection()} className='btn btn-success'>Add A New Collection</button>
                     </div>
-                    <div className='show-flashcard col-sml-4'>
+                    <div className='show-flashcard col-sml-3'>
                         <button onClick={() => this.deleteCollection()} className='btn btn-danger'>Delete this Collection</button>
+                    </div>
+                    <div className='show-flashcard col-sml-3'>
+                        <button onClick={() => this.updateCollection()} className='btn btn-warning'>Update this Collection</button>
                     </div>
                 </div>
                 ) 
