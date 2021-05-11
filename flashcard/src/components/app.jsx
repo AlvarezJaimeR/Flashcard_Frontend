@@ -18,7 +18,8 @@ class App extends Component {
             collectionButton: true,
             addFlashcardButton: true,
             deleteButton: true,
-            deleteFlashcardButton: true,
+            answerShowing: false,
+            display: 'Show Answer',
             collectionNumber: 0,
             flashcardNumber: 0
         }
@@ -86,7 +87,7 @@ class App extends Component {
             this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]._id)
         .then(res => {
             this.flashcardRender();
-            console.log('before setting the state. delete: ', this.state.flashcardCollection[this.state.collectionNumber].cards);
+            console.log('after setting the state. delete: ', this.state.flashcardCollection[this.state.collectionNumber].cards);
         })
         .catch(err => {
             console.log(err)
@@ -199,6 +200,21 @@ class App extends Component {
         });
     }
 
+    showAnswer(){
+        console.log('Showing Answer');
+        if (this.state.answerShowing === false) {
+        this.setState({
+            answerShowing: !this.state.answerShowing,
+            display: 'Hide Answer'
+        })
+        }else {
+            this.setState({
+                answerShowing: !this.state.answerShowing,
+                display: 'Show Answer'
+            })
+        }
+    }
+
     render() {
         //Flashcard Creator
         if(this.state.addFlashcardButton === false){
@@ -245,8 +261,8 @@ class App extends Component {
                         <TitleBar desiredTitle = {this.state.flashcardCollection[this.state.collectionNumber].title}/>
                         <Flashcards flashcard = {this.state.flashcardCollection[this.state.collectionNumber].cards[this.state.flashcardNumber]}
                         nextCard={()=> this.goToNextFlashcard()} previousCard={()=> this.goToPreviousFlashcard()}
-                        flashcardTotal = {this.state.flashcardCollection[this.state.collectionNumber].cards.length}
-                        currentFlashcard = {this.state.flashcardNumber + 1}/>
+                        flashcardTotal = {this.state.flashcardCollection[this.state.collectionNumber].cards.length} display = {this.state.display}
+                        currentFlashcard = {this.state.flashcardNumber + 1} answerShowing = {this.state.answerShowing} showAnswer={()=> this.showAnswer()}/>
                     </div>
                     <div>
                         <button onClick={() => this.displayMainMenu()}className='btn btn-success show-flashcard'>Collection Menu!</button>

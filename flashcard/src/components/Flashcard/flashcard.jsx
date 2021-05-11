@@ -6,11 +6,17 @@ function Flashcard(props){
         <div className="flashcard">
             {console.log("in the flashcard function.")}
             {console.log(props)}
+            {console.log(props.answerShowing)}
             <div className="flashcard-cover">
                 <h1 className = "category">{props.flashcard.category}</h1>
                 <h3 className = "question">{props.flashcard.question}</h3>
                 <div>
-                <h5 className = "answer">{props.flashcard.answer}</h5>
+                    <button onClick={() => props.showAnswer()}>{props.display}</button>
+                    { props.answerShowing ? 
+                        <div>
+                        <h5 className = "answer">{props.flashcard.answer}</h5>
+                        </div> 
+                    : null}
                 </div>
                 <h6 className = "count">{props.currentFlashcard + " / " + props.flashcardTotal}</h6>
             </div>

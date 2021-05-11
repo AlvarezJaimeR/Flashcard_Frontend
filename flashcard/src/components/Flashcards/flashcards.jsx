@@ -11,7 +11,9 @@ function Flashcards(props){
             <button onClick={() => props.previousCard()}>Previous Card</button>
         </div>
         <div className="col-md-6">
-            <Flashcard flashcard = {props.flashcard} currentFlashcard = {props.currentFlashcard} flashcardTotal = {props.flashcardTotal}/>
+            <Flashcard answerShowing = {props.answerShowing} 
+                flashcard = {props.flashcard} currentFlashcard = {props.currentFlashcard} flashcardTotal = {props.flashcardTotal}
+                showAnswer={props.showAnswer} display={props.display}/>
         </div>
         <div className ="col-md-3 text-center">
             <button onClick={() => props.nextCard()}>Next Card</button>
