@@ -330,16 +330,16 @@ class App extends Component {
                     <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                         nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
                         <div className = "row">
-                            <div className='show-flashcard col-sml-3'>
+                            <div className='show-flashcard col-sm-2'>
                                 <button onClick={() => this.showFlashcards()} className='btn btn-primary'>Flashcard Menu!</button>
                             </div>
-                            <div className='show-flashcard col-sml-3'>
+                            <div className='show-flashcard col-sm-2'>
                                 <button onClick={() => this.addCollection()} className='btn btn-success'>Add A New Collection</button>
                             </div>
-                            <div className='show-flashcard col-sml-3'>
+                            <div className='show-flashcard col-sm-2'>
                                 <button onClick={() => this.deleteCollection()} className='btn btn-danger'>Delete this Collection</button>
                             </div>
-                            <div className='show-flashcard col-sml-3'>
+                            <div className='show-flashcard col-sm-2'>
                                 <button onClick={() => this.updateCollection()} className='btn btn-warning'>Update this Collection</button>
                             </div>
                         </div>
@@ -354,16 +354,16 @@ class App extends Component {
                 <FlashcardCollection collection = {this.state.flashcardCollection[this.state.collectionNumber]} 
                     nextCollection={()=> this.goToNextCollection()} previousCollection={()=> this.goToPreviousCollection()}/>
                     <div className ="row">
-                        <div className='show-flashcard col-sml-3'>
+                        <div className='show-flashcard col-sm-2'>
                             <button onClick={() => this.showFlashcards()} className='btn btn-primary'>Flashcard Menu!</button>
                         </div>
-                        <div className='show-flashcard col-sml-3'>
+                        <div className='show-flashcard col-sm-2'>
                             <button onClick={() => this.addCollection()} className='btn btn-success'>Add A New Collection</button>
                         </div>
-                        <div className='show-flashcard col-sml-3'>
+                        <div className='show-flashcard col-sm-2'>
                             <button onClick={() => this.deleteCollection()} className='btn btn-danger'>Delete this Collection</button>
                         </div>
-                        <div className='show-flashcard col-sml-3'>
+                        <div className='show-flashcard col-sm-2'>
                             <button onClick={() => this.updateCollection()} className='btn btn-warning'>Update this Collection</button>
                         </div>
                     </div>
